@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テトリス</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>テトリス</h1>
+    <div class="game-area">
+      <div class="board-wrap">
+        <canvas id="board" width="300" height="600"></canvas>
+        <div id="overlay" class="overlay">
+          <div id="overlay-text">スタートを押して開始</div>
+        </div>
+      </div>
+      <div class="side-panel">
+        <div class="panel-box">
+          <h2>NEXT</h2>
+          <canvas id="next" width="120" height="120"></canvas>
+        </div>
+        <div class="panel-box">
+          <h2>SCORE</h2>
+          <p id="score">0</p>
+        </div>
+        <div class="panel-box">
+          <h2>LEVEL</h2>
+          <p id="level">1</p>
+        </div>
+        <div class="panel-box">
+          <h2>LINES</h2>
+          <p id="lines">0</p>
+        </div>
+        <button id="start-btn">スタート</button>
+        <div class="controls">
+          <p>← → : 移動</p>
+          <p>↑ : 回転</p>
+          <p>↓ : ソフトドロップ</p>
+          <p>スペース : ハードドロップ</p>
+          <p>P : 一時停止</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
