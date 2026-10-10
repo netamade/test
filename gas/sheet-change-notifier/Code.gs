@@ -37,6 +37,12 @@ const CONFIG = {
 
   // 件名の先頭
   SUBJECT_PREFIX: '[スプレッドシート更新]',
+
+  // どの行かを示す値が入っている列（通知に「◯◯の行」として表示）
+  KEY_COLUMN: 'AM',
+
+  // ヘッダー名が入っている行番号（通知に〈ヘッダー名〉として表示）
+  HEADER_ROW: 1,
 };
 
 // 内部用（変更不要）
@@ -90,7 +96,6 @@ function handleEdit(e) {
     const record = {
       time: new Date().toISOString(),
       editor: editor,
-      sheetName: sheet.getName(),
       sheetId: sheet.getSheetId(),
       changes: changes,
     };
@@ -138,7 +143,6 @@ function handleChange(e) {
     const record = {
       time: new Date().toISOString(),
       editor: editor,
-      sheetName: activeSheet.getName(),
       sheetId: activeSheet.getSheetId(),
       structural: labels[e.changeType] || e.changeType,
       changes: [],
@@ -201,14 +205,25 @@ function diffWithSnapshot_(ss, sheet, range, e) {
       .map(r => r.map(v => String(v)));
   }
 
+  // ヘッダー名と、各行の識別値（KEY_COLUMN の値）を取得
+  const keyCol = sheet.getRange(CONFIG.KEY_COLUMN + '1').getColumn();
+  const headers = sheet.getRange(CONFIG.HEADER_ROW, col0, 1, numCols).getDisplayValues()[0];
+  const keys = sheet.getRange(row0, keyCol, numRows, 1).getDisplayValues().map(r => r[0]);
+
   const changes = [];
   for (let r = 0; r < numRows; r++) {
     for (let c = 0; c < numCols; c++) {
       const before = oldValues[r][c];
       const after = newValues[r][c];
       if (before !== after) {
+        // 識別列そのものが変わった場合は、変更前の値で行を示す
+        let key = keys[r];
+        if (col0 + c === keyCol && before !== '' && before !== '(不明)') key = before;
+        const a1 = sheet.getRange(row0 + r, col0 + c).getA1Notation();
         changes.push({
-          a1: sheet.getRange(row0 + r, col0 + c).getA1Notation(),
+          a1: a1,
+          key: key || '(' + CONFIG.KEY_COLUMN + '列が空 / ' + (row0 + r) + '行目)',
+          header: headers[c] || a1.replace(/[0-9]+$/, '') + '列',
           before: before,
           after: after,
         });
@@ -354,8 +369,7 @@ function buildHtmlBody_(ss, records) {
 
   records.forEach(rec => {
     const time = Utilities.formatDate(new Date(rec.time), tz, 'yyyy/MM/dd HH:mm:ss');
-    html += '<h3 style="margin:16px 0 4px">シート「' + esc_(rec.sheetName) + '」 ' +
-      '<span style="font-weight:normal;color:#666">' + time + ' / ' + esc_(rec.editor) + '</span></h3>';
+    html += '<p style="margin:16px 0 4px;color:#666">' + time + ' / ' + esc_(rec.editor) + '</p>';
 
     if (rec.structural) {
       html += '<p>' + esc_(rec.structural) + '</p>';
@@ -363,7 +377,8 @@ function buildHtmlBody_(ss, records) {
     if (rec.changes.length === 0) return;
 
     html += '<table style="border-collapse:collapse" cellpadding="6">' +
-      '<tr style="background:#f1f3f4"><th style="border:1px solid #ccc">セル</th>' +
+      '<tr style="background:#f1f3f4"><th style="border:1px solid #ccc">' + CONFIG.KEY_COLUMN + '列</th>' +
+      '<th style="border:1px solid #ccc">項目</th>' +
       '<th style="border:1px solid #ccc">変更前</th><th style="border:1px solid #ccc">変更後</th></tr>';
 
     rec.changes.forEach(ch => {
@@ -371,7 +386,8 @@ function buildHtmlBody_(ss, records) {
       shown++;
       const link = ss.getUrl() + '#gid=' + rec.sheetId + '&range=' + ch.a1;
       html += '<tr>' +
-        '<td style="border:1px solid #ccc"><a href="' + link + '">' + ch.a1 + '</a></td>' +
+        '<td style="border:1px solid #ccc"><a href="' + link + '">' + esc_(ch.key) + '</a></td>' +
+        '<td style="border:1px solid #ccc">〈' + esc_(ch.header) + '〉</td>' +
         '<td style="border:1px solid #ccc;background:#fce8e6">' + fmtHtml_(ch.before) + '</td>' +
         '<td style="border:1px solid #ccc;background:#e6f4ea">' + fmtHtml_(ch.after) + '</td></tr>';
     });
@@ -392,12 +408,13 @@ function buildTextBody_(ss, records) {
 
   records.forEach(rec => {
     const time = Utilities.formatDate(new Date(rec.time), tz, 'yyyy/MM/dd HH:mm:ss');
-    lines.push('■ シート「' + rec.sheetName + '」 ' + time + ' / ' + rec.editor);
+    lines.push('■ ' + time + ' / ' + rec.editor);
     if (rec.structural) lines.push('  ' + rec.structural);
     rec.changes.forEach(ch => {
       if (shown >= CONFIG.MAX_ROWS_IN_MAIL) return;
       shown++;
-      lines.push('  ' + ch.a1 + ': ' + fmtText_(ch.before) + ' → ' + fmtText_(ch.after));
+      lines.push('  ' + CONFIG.KEY_COLUMN + '列「' + ch.key + '」の〈' + ch.header + '〉が ' +
+        fmtText_(ch.before) + ' から ' + fmtText_(ch.after) + ' に変更');
     });
     lines.push('');
   });
