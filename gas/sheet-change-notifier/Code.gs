@@ -332,13 +332,14 @@ function sendNotification_(ss, records, editor) {
 }
 
 function getRecipients_(ss, editor) {
-  const file = DriveApp.getFileById(ss.getId());
+  // ドライブ全体へのアクセス権限はブロックされやすいため、
+  // スプレッドシート自身から共有者を取得する
   const emails = [];
 
-  const owner = file.getOwner();
+  const owner = ss.getOwner();
   if (owner) emails.push(owner.getEmail());
-  file.getEditors().forEach(u => emails.push(u.getEmail()));
-  if (CONFIG.INCLUDE_VIEWERS) file.getViewers().forEach(u => emails.push(u.getEmail()));
+  ss.getEditors().forEach(u => emails.push(u.getEmail()));
+  if (CONFIG.INCLUDE_VIEWERS) ss.getViewers().forEach(u => emails.push(u.getEmail()));
   CONFIG.EXTRA_RECIPIENTS.forEach(a => emails.push(a));
 
   const exclude = CONFIG.EXCLUDE_RECIPIENTS.map(a => a.toLowerCase());
