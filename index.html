@@ -3,47 +3,354 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>テトリス</title>
-<link rel="stylesheet" href="style.css">
+<title>男！ラーメン屋 濃い男児！｜大盛ラーメンと北海道豚丼</title>
+<meta name="description" content="こだわりの大盛ラーメンと北海道豚丼が名物。胃袋のキャンパスで極上の満腹を履修せよ！">
+<style>
+/* 男！ラーメン屋 濃い男児！ OFFICIAL WEBSITE STYLESHEET（ChatGPT作成） */
+:root {
+  --ink: #1a1a1a;
+  --red: #c8102e;
+  --gold: #d4a017;
+  --paper: #fff8ec;
+  --white: #ffffff;
+  --muted: #665e52;
+  --border: #d9cbb4;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  --radius: 8px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(90, 65, 30, 0.018) 4px);
+  color: var(--ink);
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+::selection { background: var(--red); color: var(--white); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+
+.site-header {
+  position: relative; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+  padding: 18px max(24px, calc((100% - 1200px) / 2));
+  background: var(--ink); color: var(--white);
+  border-bottom: 5px solid var(--red); box-shadow: var(--shadow);
+}
+.site-header .logo, .site-header h1 {
+  margin: 0; color: var(--gold);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 900; line-height: 1.4; letter-spacing: 0.05em;
+  text-shadow: 2px 2px 0 var(--red);
+}
+.site-header nav { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 24px; }
+.site-header nav a { position: relative; padding: 8px 0; font-size: 0.9rem; font-weight: 800; transition: color 0.2s ease; }
+.site-header nav a::after { content: ""; position: absolute; bottom: 3px; left: 0; width: 0; height: 3px; background: var(--red); transition: width 0.2s ease; }
+.site-header nav a:hover { color: var(--gold); }
+.site-header nav a:hover::after { width: 100%; }
+
+.hero {
+  position: relative; isolation: isolate;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 570px; padding: 100px 24px; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 70%, rgba(200, 16, 46, 0.35), transparent 65%),
+    repeating-linear-gradient(-45deg, transparent 0, transparent 30px, rgba(255, 255, 255, 0.025) 31px, rgba(255, 255, 255, 0.025) 33px),
+    var(--ink);
+  color: var(--white); text-align: center;
+}
+.hero::before {
+  content: "濃"; position: absolute; z-index: -1; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  color: rgba(255, 255, 255, 0.045); font-size: clamp(260px, 45vw, 600px); font-weight: 900; line-height: 1; pointer-events: none;
+}
+.hero::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 10px;
+  background: repeating-linear-gradient(90deg, var(--red) 0 48px, var(--gold) 48px 60px); }
+.hero-title {
+  margin: 0 0 20px; color: var(--gold);
+  font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.2; letter-spacing: 0.06em;
+  overflow-wrap: anywhere; -webkit-text-stroke: 1px var(--ink);
+  text-shadow: 4px 4px 0 var(--red), 7px 7px 0 rgba(0, 0, 0, 0.7);
+}
+.hero-sub { max-width: 750px; margin: 0 auto 34px; color: var(--white); font-size: clamp(1rem, 2.6vw, 1.5rem); font-weight: 800; line-height: 1.9; letter-spacing: 0.08em; }
+.hero-sub strong { color: var(--gold); font-weight: 900; }
+
+.btn-flame {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 58px; padding: 14px 32px;
+  border: 3px solid var(--gold); border-radius: 4px; background: var(--red); color: var(--white);
+  font-size: 1.1rem; font-weight: 900; letter-spacing: 0.06em; line-height: 1.4; text-align: center; cursor: pointer;
+  box-shadow: 5px 5px 0 var(--ink), 0 0 24px rgba(200, 16, 46, 0.2);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-flame::before { content: "🔥"; font-size: 1.3em; }
+.btn-flame:hover { transform: translateY(-4px); background: #e21b3c; box-shadow: 5px 9px 0 var(--ink), 0 0 30px rgba(200, 16, 46, 0.45); }
+.btn-flame:active { transform: translateY(2px); box-shadow: 2px 2px 0 var(--ink); }
+
+.section { width: min(100% - 48px, 1200px); margin-inline: auto; padding-block: 90px; }
+.section + .section { border-top: 2px dashed var(--border); }
+.section-title {
+  position: relative; width: fit-content; max-width: 100%; margin: 0 auto 55px; padding: 0 12px 20px;
+  color: var(--ink); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; line-height: 1.4; letter-spacing: 0.06em; text-align: center;
+}
+.section-title::before { content: "男"; position: absolute; top: -20px; left: -28px; z-index: -1; color: rgba(200, 16, 46, 0.09); font-size: 4.5em; line-height: 1; transform: rotate(-15deg); }
+.section-title::after { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 85%; height: 7px; background: var(--red); box-shadow: 0 5px 0 var(--gold); }
+
+.menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+.menu-card {
+  position: relative; display: flex; flex-direction: column; min-width: 0; padding: 20px; overflow: hidden;
+  background: #fffcf5; border: 3px solid var(--ink); border-radius: var(--radius); box-shadow: 7px 7px 0 var(--gold);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.menu-card:hover { transform: translate(-3px, -5px); box-shadow: 10px 12px 0 var(--red); }
+.menu-card p { margin: 8px 0 0; color: var(--muted); font-size: 0.95rem; }
+.menu-card.featured { border-color: var(--red); box-shadow: 7px 7px 0 var(--red); }
+.menu-card.featured::before {
+  content: "男の本命"; position: absolute; z-index: 2; top: 18px; right: -38px; width: 150px; padding: 7px 0;
+  transform: rotate(35deg); background: var(--red); color: var(--white); font-size: 0.8rem; font-weight: 900; text-align: center; letter-spacing: 0.08em;
+}
+.menu-name { margin: 4px 0 10px; color: var(--ink); font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 900; line-height: 1.4; border-left: 6px solid var(--red); padding-left: 12px; }
+.menu-price { margin-top: auto; padding-top: 18px; color: var(--red); font-size: clamp(1.5rem, 2.8vw, 2rem); font-weight: 900; line-height: 1.3; text-align: right; font-variant-numeric: tabular-nums; }
+.menu-price small { margin-left: 3px; color: var(--ink); font-size: 0.5em; font-weight: 800; }
+
+.rules { position: relative; padding: 40px 44px; background: var(--ink); color: var(--white); border: 6px double var(--gold); border-radius: var(--radius); box-shadow: var(--shadow); }
+.rules h3 { margin: 0 0 20px; color: var(--gold); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; text-align: center; }
+.rules ul, .rules ol { margin: 0; padding-left: 1.5em; }
+.rules li { padding: 12px 0; font-weight: 700; border-bottom: 1px dashed rgba(255, 255, 255, 0.25); }
+.rules li:last-child { border-bottom: 0; }
+.rules li::marker { color: var(--gold); font-weight: 900; }
+.rules strong { color: var(--gold); }
+
+.challenge {
+  position: relative; isolation: isolate; padding: 65px 40px; overflow: hidden;
+  background: repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.06) 0, rgba(0, 0, 0, 0.06) 12px, transparent 12px, transparent 24px), var(--red);
+  color: var(--white); border: 6px solid var(--ink); text-align: center; box-shadow: 9px 9px 0 var(--gold);
+}
+.challenge::before { content: "挑戦"; position: absolute; z-index: -1; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg); color: rgba(255, 255, 255, 0.08); font-size: clamp(6rem, 20vw, 16rem); font-weight: 900; white-space: nowrap; }
+.challenge h2, .challenge h3 { margin: 0 0 22px; color: var(--gold); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.3; text-shadow: 3px 3px 0 var(--ink); }
+.challenge p { max-width: 750px; margin: 0 auto 26px; font-size: clamp(1rem, 2.2vw, 1.25rem); font-weight: 800; }
+.challenge .btn-flame { background: var(--ink); border-color: var(--gold); }
+.challenge .btn-flame:hover { background: #37302a; }
+
+.shop-info { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; padding: 36px; background: #fffdf7; border: 3px solid var(--ink); border-left: 12px solid var(--red); border-radius: var(--radius); box-shadow: var(--shadow); }
+.shop-info h3 { margin: 0 0 16px; color: var(--red); font-size: 1.5rem; font-weight: 900; }
+.shop-info dl { margin: 0; }
+.shop-info dt { margin-top: 14px; color: var(--muted); font-size: 0.85rem; font-weight: 900; }
+.shop-info dd { margin: 2px 0 0; padding-bottom: 12px; font-size: 1rem; font-weight: 700; border-bottom: 1px dashed var(--border); }
+.shop-info a { color: var(--red); text-decoration: underline; text-underline-offset: 3px; }
+.shop-info a:hover { color: var(--ink); }
+
+.master-msg { position: relative; max-width: 900px; margin: 0 auto; padding: 50px 55px; background: #f5e9d2; border: 2px solid var(--gold); border-radius: 3px; color: var(--ink); box-shadow: 6px 6px 0 rgba(26, 26, 26, 0.15); transform: rotate(-0.5deg); }
+.master-msg::before { content: "「"; position: absolute; top: -35px; left: 10px; color: var(--red); font-size: 7rem; font-weight: 900; line-height: 1; }
+.master-msg h3 { margin: 0 0 20px; color: var(--red); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; }
+.master-msg p { margin: 0 0 20px; font-size: 1.1rem; font-weight: 700; line-height: 2.2; }
+.master-msg p:last-child { margin-bottom: 0; }
+.master-msg .signature { margin-top: 25px; color: var(--red); font-size: 1.2rem; font-weight: 900; text-align: right; }
+
+.site-footer { position: relative; margin-top: 80px; padding: 55px 24px 30px; background: var(--ink); color: var(--white); text-align: center; border-top: 8px solid var(--red); }
+.site-footer::before { content: ""; position: absolute; top: -14px; left: 0; width: 100%; height: 5px; background: var(--gold); }
+.site-footer .logo, .site-footer h2 { margin: 0 0 16px; color: var(--gold); font-size: clamp(1.5rem, 4vw, 2.3rem); font-weight: 900; text-shadow: 2px 2px 0 var(--red); }
+.site-footer p { margin: 8px 0; font-size: 0.9rem; line-height: 1.8; }
+.site-footer nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 25px; margin: 25px 0; }
+.site-footer a { color: var(--white); font-weight: 700; transition: color 0.2s ease; }
+.site-footer a:hover { color: var(--gold); }
+.site-footer small { display: block; margin-top: 30px; padding-top: 18px; color: #bdb3a4; font-size: 0.75rem; border-top: 1px solid #444; }
+
+@media (max-width: 900px) {
+  .site-header { padding: 18px 24px; }
+  .hero { min-height: 480px; padding: 75px 24px; }
+  .section { padding-block: 70px; }
+  .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .shop-info { gap: 24px; padding: 26px; }
+}
+@media (max-width: 600px) {
+  html { scroll-padding-top: 20px; }
+  .site-header { flex-direction: column; justify-content: center; gap: 12px; padding: 16px; text-align: center; }
+  .site-header .logo, .site-header h1 { font-size: 1.35rem; }
+  .site-header nav { justify-content: center; gap: 6px 15px; }
+  .site-header nav a { font-size: 0.78rem; padding: 6px 0; }
+  .hero { min-height: 430px; padding: 70px 18px; }
+  .hero-title { font-size: clamp(2.35rem, 10vw, 3.5rem); letter-spacing: 0.02em; text-shadow: 2px 2px 0 var(--red), 4px 4px 0 rgba(0, 0, 0, 0.65); }
+  .hero-sub { margin-bottom: 28px; font-size: 1rem; letter-spacing: 0.02em; }
+  .btn-flame { width: 100%; max-width: 340px; min-height: 54px; padding: 13px 20px; font-size: 1rem; }
+  .section { width: min(100% - 32px, 1200px); padding-block: 55px; }
+  .section-title { margin-bottom: 40px; padding-bottom: 16px; font-size: 1.8rem; }
+  .section-title::before { left: -10px; top: -10px; font-size: 3.5em; }
+  .menu-grid { grid-template-columns: minmax(0, 1fr); gap: 25px; }
+  .menu-card { padding: 16px; box-shadow: 5px 5px 0 var(--gold); }
+  .menu-card:hover { transform: none; box-shadow: 5px 5px 0 var(--red); }
+  .menu-name { font-size: 1.4rem; }
+  .menu-price { font-size: 1.8rem; }
+  .rules { padding: 25px 20px; border-width: 4px; }
+  .rules h3 { font-size: 1.5rem; }
+  .rules li { font-size: 0.95rem; }
+  .challenge { padding: 45px 20px; border-width: 4px; box-shadow: 5px 5px 0 var(--gold); }
+  .challenge h2, .challenge h3 { font-size: 2rem; }
+  .challenge p { font-size: 1rem; }
+  .shop-info { grid-template-columns: minmax(0, 1fr); gap: 25px; padding: 22px; border-left-width: 7px; }
+  .master-msg { padding: 40px 22px 30px; transform: none; }
+  .master-msg::before { top: -23px; left: 5px; font-size: 5rem; }
+  .master-msg h3 { font-size: 1.5rem; }
+  .master-msg p { font-size: 1rem; line-height: 2; }
+  .site-footer { margin-top: 55px; padding: 45px 18px 25px; }
+  .site-footer nav { gap: 12px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+
+/* --- 組み立て時の調整（シロ） --- */
+.site-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; }
+.rule { padding: 14px 0; border-bottom: 1px dashed rgba(255,255,255,.25); }
+.rule:last-child { border-bottom: 0; }
+.rule p { margin: 6px 0 0; font-weight: 700; }
+.shop-info .note p { font-weight: 700; line-height: 2; }
+
+</style>
 </head>
 <body>
-  <div class="game-container">
-    <h1>テトリス</h1>
-    <div class="game-area">
-      <div class="board-wrap">
-        <canvas id="board" width="300" height="600"></canvas>
-        <div id="overlay" class="overlay">
-          <div id="overlay-text">スタートを押して開始</div>
-        </div>
+<header class="site-header">
+  <div class="logo">男！ラーメン屋 濃い男児！</div>
+  <nav class="site-nav">
+    <ul>
+      <li><a href="#home">トップ</a></li>
+      <li><a href="#menu">メニュー（講義）</a></li>
+      <li><a href="#kodawari">掟</a></li>
+      <li><a href="#challenge">チャレンジ</a></li>
+      <li><a href="#master">店主</a></li>
+      <li><a href="#access">店舗情報</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section id="home" class="hero">
+    <h1 class="hero-title">胃袋のキャンパスで極上の満腹を履修せよ！</h1>
+    <p class="hero-sub">講義より濃く、単位より重い、男の胃袋直撃インパクト！</p>
+    <a href="#menu" class="btn-flame">講義（メニュー）を受ける</a>
+  </section>
+
+  <section id="menu" class="section">
+    <h2 class="section-title">講義一覧（メニュー）</h2>
+    <div class="menu-grid">
+      <div class="menu-card featured">
+        <h3 class="menu-name">濃厚豚骨醤油 豚男講義ラーメン</h3>
+        <p>ガツンと炊き出した濃厚豚骨スープに特製醤油ダレを合わせた、当店の基本にして最強の基礎科目です。</p>
+        <p class="menu-price">並880円／大盛1,050円</p>
       </div>
-      <div class="side-panel">
-        <div class="panel-box">
-          <h2>NEXT</h2>
-          <canvas id="next" width="120" height="120"></canvas>
-        </div>
-        <div class="panel-box">
-          <h2>SCORE</h2>
-          <p id="score">0</p>
-        </div>
-        <div class="panel-box">
-          <h2>LEVEL</h2>
-          <p id="level">1</p>
-        </div>
-        <div class="panel-box">
-          <h2>LINES</h2>
-          <p id="lines">0</p>
-        </div>
-        <button id="start-btn">スタート</button>
-        <div class="controls">
-          <p>← → : 移動</p>
-          <p>↑ : 回転</p>
-          <p>↓ : ソフトドロップ</p>
-          <p>スペース : ハードドロップ</p>
-          <p>P : 一時停止</p>
-        </div>
+      <div class="menu-card">
+        <h3 class="menu-name">赤味噌ニンニク 燃える必修味噌ラーメン</h3>
+        <p>強火で炒めたニンニクの香りとコク深い赤味噌が理性を吹き飛ばす、エネルギー全開の熱血メニューです。</p>
+        <p class="menu-price">並930円／大盛1,100円</p>
+      </div>
+      <div class="menu-card">
+        <h3 class="menu-name">激辛麻辣 卒業試験坦々麺</h3>
+        <p>痺れる花椒と特製ラー油が容赦なく襲い掛かる、辛いもの好きの猛者だけが挑む伝説の試練です。</p>
+        <p class="menu-price">並980円／大盛1,150円</p>
+      </div>
+      <div class="menu-card">
+        <h3 class="menu-name">魚介豚骨 単位救済つけ麺</h3>
+        <p>濃厚豚骨と魚介の旨味を極限まで凝縮したつけ汁に極太麺が絡む、空腹の窮地を救う救世主です。</p>
+        <p class="menu-price">並950円／大盛1,120円</p>
+      </div>
+      <div class="menu-card">
+        <h3 class="menu-name">特製ダレの北海道帯広風 豚丼</h3>
+        <p>本場仕込みの甘辛ダレを纏わせ炭火の香ばしさを閉じ込めた、ご飯が止まらない絶品肉丼です。</p>
+        <p class="menu-price">並750円／大盛950円</p>
+      </div>
+      <div class="menu-card">
+        <h3 class="menu-name">ネギ塩ブラックペッパー 豚丼</h3>
+        <p>たっぷりのネギとキレのある黒コショウが豚肉の旨味を引き立てる、爽快かつ豪快なスタミナ丼です。</p>
+        <p class="menu-price">並780円／大盛980円</p>
+      </div>
+      <div class="menu-card">
+        <h3 class="menu-name">チーズマヨ炙り 豚丼</h3>
+        <p>香ばしく炙ったチーズと濃厚マヨネーズが極上のハーモニーを奏でる、背徳感たっぷりの魅惑の丼です。</p>
+        <p class="menu-price">並830円／大盛1,030円</p>
+      </div>
+      <div class="menu-card">
+        <h3 class="menu-name">男気爆盛り唐揚げ</h3>
+        <p>外はカリッと中はジューシーに揚げた、圧倒的なボリュームを誇る自慢の鶏唐揚げです。</p>
+        <p class="menu-price">450円</p>
+      </div>
+      <div class="menu-card">
+        <h3 class="menu-name">特製ニンニク餃子</h3>
+        <p>噛みしめた瞬間に旨味とニンニクの風味が口いっぱいに広がる、食欲をそそる焼き餃子です。</p>
+        <p class="menu-price">380円</p>
       </div>
     </div>
-  </div>
-  <script src="script.js"></script>
+  </section>
+
+  <section id="kodawari" class="section">
+    <h2 class="section-title">濃い男児の掟</h2>
+    <div class="rules">
+      <div class="rule">
+        <h3>一、麺は力なり</h3>
+        <p>すするすべての瞬間に全力を注ぎ、心も胃袋も完全に満たすべし。</p>
+      </div>
+      <div class="rule">
+        <h3>二、スープは魂なり</h3>
+        <p>骨の髄まで旨味を絞り出した濃厚スープで男の活力をみなぎらせるべし。</p>
+      </div>
+      <div class="rule">
+        <h3>三、残すことなかれ</h3>
+        <p>目の前にそびえ立つ一杯の芸術を感謝と共に完食して卒業すべし。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="challenge" class="section">
+    <h2 class="section-title">大盛チャレンジ</h2>
+    <div class="challenge">
+      <h3>男児卒業セレモニー大盛チャレンジ</h3>
+      <p>挑戦者求む。胃袋の卒業試験、ここに開幕。</p>
+      <p>ルール：制限時間20分以内に、総重量2kg超えの特大ラーメンと特大豚丼のコンビネーションを、スープの一滴まで残さず完食せよ！</p>
+      <p>特典：見事クリアして卒業証書を手に入れた猛者には、次回から使える永久無料パスポートと、店内の名誉殿堂入りボードへのお名前掲示を進呈するぞ！</p>
+    </div>
+  </section>
+
+  <section id="master" class="section">
+    <h2 class="section-title">店主からの挨拶</h2>
+    <div class="master-msg">
+      <p>ようこそ、胃袋の最高学府へ！当店は腹ペコな戦士たちのために、妥協一切なしの濃厚な一杯を日々研究し続けています。講義の合間も、部活帰りも、エネルギーをチャージしたい日も大歓迎です。熱々のラーメンと豚丼を用意して待っているから、覚悟を決めて暖簾をくぐってくれ！</p>
+      <p class="signature">店主（学長）濃井 男児</p>
+    </div>
+  </section>
+
+  <section id="access" class="section">
+    <h2 class="section-title">店舗情報・アクセス</h2>
+    <div class="shop-info">
+      <dl>
+        <dt>住所</dt>
+        <dd>東京都大盛市濃町2-5-1（※架空の店舗です）</dd>
+        <dt>営業時間（講義時間）</dt>
+        <dd>11:00〜23:00（L.O. 22:30）※売り切れ次第、その日の講義は終了</dd>
+        <dt>定休日</dt>
+        <dd>月曜日（祝日の場合は翌日が振替休講）</dd>
+        <dt>電話</dt>
+        <dd>042-000-0000（※架空の番号です）</dd>
+        <dt>席数</dt>
+        <dd>カウンター20席（全席・必修科目）</dd>
+        <dt>最寄り駅</dt>
+        <dd>JR八王子駅から徒歩5分（空腹ダッシュなら3分）</dd>
+      </dl>
+
+      <div class="note">
+        <h3>アクセスの極意</h3>
+        <p>駐車場はない。持ってくるのは空っぽの胃袋と、完食への覚悟だけだ。到着したらまず券売機の前に立て。それが入学手続きである。</p>
+        <p>混雑時は行列必至。だが並んだ者だけが、卒業（完食）の栄誉にあずかれる。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 男！ラーメン屋 濃い男児！ ― このサイトはAI 3体（Gemini／ChatGPT／Claude）の共同制作デモです。店舗・メニュー・価格はすべて架空です。</p>
+</footer>
+
 </body>
 </html>
